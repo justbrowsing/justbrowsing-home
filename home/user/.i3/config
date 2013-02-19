@@ -1,0 +1,22 @@
+set $mod Mod4
+exec --no-startup-id withlock $HOME/.locks/wallpaper.lock nitrogen --restore
+font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+bindsym Control+q kill
+bindsym Mod1+F4 kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+s layout stacking
+bindsym $mod+Shift+w layout tabbed
+bindsym $mod+Shift+e layout toggle split
+bindsym Control+$mod+Mod1+Delete exec i3-msg exit
+workspace_layout stacking
+bindsym $mod+l exec withlock $HOME/.locks/nagbar.lock /opt/justbrowsing/lockswitch
+bindsym XF86AudioMute exec mute_toggle
+bindsym XF86AudioLowerVolume exec vol_down
+bindsym XF86AudioRaiseVolume exec vol_up
+exec withlock $HOME/.locks/panel.lock adeskbar
+exec withlock $HOME/.locks/audio.lock pnmixer
+exec withlock $HOME/.locks/networking.lock nm-applet
+exec withlock $HOME/.locks/reload.lock /opt/justbrowsing/browser
+for_window [title="main.py"] floating enable
+new_window 1pixel

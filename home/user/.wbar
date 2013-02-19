@@ -1,0 +1,12 @@
+i: /usr/share/pixmaps/wbar/dock.png
+c: wbar --bpress --above-desk --pos top-left --noreload --isize 32 --idist 5 --nanim 3 --zoomf 1.800000 --jumpf 1.000000
+t: /opt/justbrowsing/DSDIGI/20
+
+i: /usr/share/icons/custom/shutdown48.png
+c: /sbin/poweroff
+t: Shutdown
+
+i: /usr/share/icons/custom/reboot48.png
+c: /sbin/reboot
+t: Reboot
+
