@@ -18,17 +18,28 @@ bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+Shift+e layout toggle split
 bindsym Control+$mod+Mod1+Delete exec i3-msg exit
-workspace_layout stacking
-bindsym $mod+l exec withlock $HOME/.locks/nagbar.lock /opt/justbrowsing/lockswitch
-bindsym XF86AudioMute exec mute_toggle
-bindsym XF86AudioLowerVolume exec vol_down
-bindsym XF86AudioRaiseVolume exec vol_up
-exec withlock $HOME/.locks/panel.lock adeskbar
-exec withlock $HOME/.locks/audio.lock pnmixer
-exec withlock $HOME/.locks/networking.lock nm-applet
-exec withlock $HOME/.locks/reload.lock /opt/justbrowsing/browser
+workspace_layout tabbed
+bindsym $mod+l exec withlock $HOME/.locks/zenity.lock /opt/justbrowsing/lockswitch
+bindsym XF86AudioMute exec pulseaudio-ctl mute
+bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
+bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
+exec numlockx
+exec amixer set Master 100%
+exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
 for_window [title="main.py"] floating enable
+for_window [title="JustBrowsing Config"] floating enable
+for_window [title="JustBrowsing Config"] border normal
+for_window [title="Lock screen"] floating enable
+for_window [title="Lock screen"] border normal
 new_window 1pixel
+bindsym Mod1+F1 exec /opt/justbrowsing/toggle
+bindsym Mod1+F2 exec withlock $HOME/.locks/settings.lock jb-config
+bindsym Mod1+F3 exec /opt/justbrowsing/debug
+bindsym Mod1+F5 exec /opt/justbrowsing/launch-webapp notes
+bindsym Mod1+F6 exec /opt/justbrowsing/launch-webapp calc
+bindsym Mod1+F7 exec /opt/justbrowsing/launch-webapp timers
+bindsym Mod1+F8 exec /opt/justbrowsing/launch-webapp email
+bindsym Mod1+F9 exec /opt/justbrowsing/launch-webapp wageclock
 ```
 
 -------------------------
@@ -40,13 +51,60 @@ i: /usr/share/pixmaps/wbar/dock.png
 c: wbar --bpress --above-desk --pos top-left --noreload --isize 32 --idist 5 --nanim 3 --zoomf 1.800000 --jumpf 1.000000
 t: /opt/justbrowsing/DSDIGI/20
 
-i: /usr/share/icons/custom/shutdown48.png
-c: /sbin/poweroff
+i: /usr/share/icons/justbrowsing/48x48/shutdown.png
+c: systemctl poweroff
 t: Shutdown
 
-i: /usr/share/icons/custom/reboot48.png
-c: /sbin/reboot
+i: /usr/share/icons/justbrowsing/48x48/reboot.png
+c: systemctl reboot
 t: Reboot
+```
+
+-------------------------
+
+* ~/.xinitrc
+```sh
+#!/bin/sh
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
+fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+	for f in /etc/X11/xinit/xinitrc.d/* ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
+
+_modeline=$(cat /proc/cmdline 2>/dev/null | grep -o "\w*gpu=\w*" | tail -n 1 | awk -F "=" '{print $2}');
+if [ "$_modeline" = "vbox" ]; then
+    VBoxClient-all &
+fi
+
+/opt/justbrowsing/start
+/opt/justbrowsing/setlocale
+/opt/justbrowsing/autosize
+exec i3
 ```
 
 -------------------------
@@ -56,7 +114,7 @@ t: Reboot
 ```sh
 [:0.0]
 file=/home/user/.i3/wallpaper.png
-mode=4
+mode=2
 bgcolor=#000000
 ```
 
@@ -65,9 +123,9 @@ bgcolor=#000000
 ```sh
 [geometry]
 posx=0
-posy=36
-sizex=1278
-sizey=883
+posy=54
+sizex=1022
+sizey=681
 
 [nitrogen]
 view=icon
