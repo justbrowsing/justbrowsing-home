@@ -9,14 +9,26 @@ bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+w layout tabbed
 bindsym $mod+Shift+e layout toggle split
 bindsym Control+$mod+Mod1+Delete exec i3-msg exit
-workspace_layout stacking
-bindsym $mod+l exec withlock $HOME/.locks/nagbar.lock /opt/justbrowsing/lockswitch
-bindsym XF86AudioMute exec mute_toggle
-bindsym XF86AudioLowerVolume exec vol_down
-bindsym XF86AudioRaiseVolume exec vol_up
-exec withlock $HOME/.locks/panel.lock adeskbar
-exec withlock $HOME/.locks/audio.lock pnmixer
-exec withlock $HOME/.locks/networking.lock nm-applet
-exec withlock $HOME/.locks/reload.lock /opt/justbrowsing/browser
+workspace_layout tabbed
+bindsym $mod+l exec withlock $HOME/.locks/zenity.lock /opt/justbrowsing/lockswitch
+bindsym XF86AudioMute exec pulseaudio-ctl mute
+bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
+bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
+exec numlockx
+exec amixer set Master 100%
+exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
 for_window [title="main.py"] floating enable
+for_window [title="JustBrowsing Config"] floating enable
+for_window [title="JustBrowsing Config"] border normal
+for_window [title="Lock screen"] floating enable
+for_window [title="Lock screen"] border normal
 new_window 1pixel
+bindsym Mod1+F1 exec /opt/justbrowsing/toggle
+bindsym Mod1+F2 exec withlock $HOME/.locks/settings.lock jb-config
+bindsym Mod1+F3 exec /opt/justbrowsing/debug
+bindsym Mod1+F5 exec /opt/justbrowsing/launch-webapp notes
+bindsym Mod1+F6 exec /opt/justbrowsing/launch-webapp calc
+bindsym Mod1+F7 exec /opt/justbrowsing/launch-webapp timers
+bindsym Mod1+F8 exec /opt/justbrowsing/launch-webapp email
+bindsym Mod1+F9 exec /opt/justbrowsing/launch-webapp wageclock
+bindsym $mod+Return exec roxterm
