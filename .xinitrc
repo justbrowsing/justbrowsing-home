@@ -1,10 +1,5 @@
 #!/bin/sh
 
-#if [ -z $DBUS_SESSION_BUS_ADDRESS ]; then
-#  eval `dbus-launch --sh-syntax --exit-with-session`;
-#  echo "D-Bus per-session daemon address is: $DBUS_SESSION_BUS_ADDRESS" | tee -a /dev/shm/dbus.log;
-#fi
-
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
@@ -28,9 +23,6 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
-# start some nice programs
-
-
 if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	for f in /etc/X11/xinit/xinitrc.d/* ; do
 		[ -x "$f" ] && . "$f"
@@ -38,12 +30,13 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-_modeline=$(cat /proc/cmdline 2>/dev/null | grep -o "\w*gpu=\w*" | tail -n 1 | awk -F "=" '{print $2}');
-if [ "$_modeline" = "vbox" ]; then
-    VBoxClient-all &
-fi
+# start justbrowsing session
 
-/opt/justbrowsing/start
-/opt/justbrowsing/setlocale
-/opt/justbrowsing/autosize
+setjb-gpu vbox-daemon
+setjb-clean
+setjb-default
+setjb-display
+setjb-zone
+setjb-locale
+loadjb-panel
 exec i3
