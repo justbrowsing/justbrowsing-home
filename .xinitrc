@@ -7,6 +7,8 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # merge in defaults and keymaps
 
+cp /opt/justbrowsing/Xresources $userresources
+
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
 fi
@@ -31,12 +33,17 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 # start justbrowsing session
+mkdir -p $HOME/Documents
+mkdir -p $HOME/Downloads
+
+[ -f "/tmp/firefox.lock" ] ||
+[ -f "/tmp/google-chrome.lock" ] ||
+setjb-default
 
 setjb-gpu vbox-daemon
-setjb-clean
-setjb-default
 setjb-display
 setjb-zone
 setjb-locale
 loadjb-panel
+
 exec i3

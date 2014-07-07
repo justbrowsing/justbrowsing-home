@@ -14,7 +14,7 @@ bindsym $mod+l exec withlock $HOME/.locks/zenity.lock /opt/justbrowsing/lockswit
 bindsym XF86AudioMute exec pulseaudio-ctl mute
 bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
 bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
-exec numlockx
+#exec numlockx
 exec amixer set Master 100%
 exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
 for_window [title="main.py"] floating enable
@@ -31,4 +31,3 @@ bindsym Mod1+F6 exec launch-webapp calc
 bindsym Mod1+F7 exec launch-webapp timers
 bindsym Mod1+F8 exec launch-webapp email
 bindsym Mod1+F9 exec launch-webapp wageclock
-bindsym $mod+Return exec roxterm
