@@ -23,23 +23,23 @@ bindsym $mod+l exec withlock $HOME/.locks/zenity.lock /opt/justbrowsing/lockswit
 bindsym XF86AudioMute exec pulseaudio-ctl mute
 bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
 bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
-exec numlockx
+#exec numlockx
 exec amixer set Master 100%
 exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
-for_window [title="main.py"] floating enable
+for_window [title="adeskbar.py"] floating enable
 for_window [title="JustBrowsing Config"] floating enable
 for_window [title="JustBrowsing Config"] border normal
 for_window [title="Lock screen"] floating enable
 for_window [title="Lock screen"] border normal
 new_window 1pixel
-bindsym Mod1+F1 exec /opt/justbrowsing/toggle
+bindsym Mod1+F1 exec loadjb-toggle
 bindsym Mod1+F2 exec withlock $HOME/.locks/settings.lock jb-config
 bindsym Mod1+F3 exec /opt/justbrowsing/debug
-bindsym Mod1+F5 exec /opt/justbrowsing/launch-webapp notes
-bindsym Mod1+F6 exec /opt/justbrowsing/launch-webapp calc
-bindsym Mod1+F7 exec /opt/justbrowsing/launch-webapp timers
-bindsym Mod1+F8 exec /opt/justbrowsing/launch-webapp email
-bindsym Mod1+F9 exec /opt/justbrowsing/launch-webapp wageclock
+bindsym Mod1+F5 exec launch-webapp notes
+bindsym Mod1+F6 exec launch-webapp calc
+bindsym Mod1+F7 exec launch-webapp timers
+bindsym Mod1+F8 exec launch-webapp email
+bindsym Mod1+F9 exec launch-webapp wageclock
 ```
 
 -------------------------
@@ -73,6 +73,8 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 
 # merge in defaults and keymaps
 
+cp /opt/justbrowsing/Xresources $userresources
+
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
 fi
@@ -96,14 +98,20 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 	unset f
 fi
 
-_modeline=$(cat /proc/cmdline 2>/dev/null | grep -o "\w*gpu=\w*" | tail -n 1 | awk -F "=" '{print $2}');
-if [ "$_modeline" = "vbox" ]; then
-    VBoxClient-all &
-fi
+# start justbrowsing session
+mkdir -p $HOME/Documents
+mkdir -p $HOME/Downloads
 
-/opt/justbrowsing/start
-/opt/justbrowsing/setlocale
-/opt/justbrowsing/autosize
+[ -f "/tmp/firefox.lock" ] ||
+[ -f "/tmp/google-chrome.lock" ] ||
+setjb-default
+
+setjb-gpu vbox-daemon
+setjb-display
+setjb-zone
+setjb-locale
+loadjb-panel
+
 exec i3
 ```
 

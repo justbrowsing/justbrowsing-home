@@ -17,7 +17,7 @@ bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
 #exec numlockx
 exec amixer set Master 100%
 exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
-for_window [title="main.py"] floating enable
+for_window [title="adeskbar.py"] floating enable
 for_window [title="JustBrowsing Config"] floating enable
 for_window [title="JustBrowsing Config"] border normal
 for_window [title="Lock screen"] floating enable
