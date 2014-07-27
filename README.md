@@ -109,6 +109,10 @@ setjb-gpu vbox-daemon
 setjb-display
 setjb-zone
 setjb-locale
+setjb-backlight
+setjb-idle
+setjb-mouse
+setjb-volume
 loadjb-panel
 
 exec i3
