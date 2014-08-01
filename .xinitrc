@@ -37,16 +37,18 @@ mkdir -p /dev/shm/Downloads
 
 [ -f "/tmp/firefox.lock" ] ||
 [ -f "/tmp/google-chrome.lock" ] ||
-setjb-default
+setjb-default load
 
 setjb-gpu vbox-daemon
+setjb-printers load
+setjb-networks load
+setjb-kiosk load
 setjb-display
 setjb-zone
 setjb-locale
 setjb-backlight
 setjb-idle
 setjb-mouse
-setjb-volume
 loadjb-panel
 
 exec i3

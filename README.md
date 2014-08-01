@@ -23,8 +23,8 @@ bindsym $mod+l exec withlock $HOME/.locks/zenity.lock /opt/justbrowsing/lockswit
 bindsym XF86AudioMute exec pulseaudio-ctl mute
 bindsym XF86AudioLowerVolume exec pulseaudio-ctl down
 bindsym XF86AudioRaiseVolume exec pulseaudio-ctl up
-#exec numlockx
-exec amixer set Master 100%
+exec pamixer --set-volume 50
+exec setjb-volume
 exec withlock $HOME/.locks/reload.lock x-www-browser --loop i3
 for_window [title="adeskbar.py"] floating enable
 for_window [title="JustBrowsing Config"] floating enable
@@ -103,16 +103,18 @@ mkdir -p /dev/shm/Downloads
 
 [ -f "/tmp/firefox.lock" ] ||
 [ -f "/tmp/google-chrome.lock" ] ||
-setjb-default
+setjb-default load
 
 setjb-gpu vbox-daemon
+setjb-printers load
+setjb-networks load
+setjb-kiosk load
 setjb-display
 setjb-zone
 setjb-locale
 setjb-backlight
 setjb-idle
 setjb-mouse
-setjb-volume
 loadjb-panel
 
 exec i3
