@@ -41,7 +41,6 @@ setjb-default load
 
 setjb-gpu vbox-daemon
 setjb-printers load
-setjb-networks load
 setjb-kiosk load
 setjb-display
 setjb-zone
@@ -49,6 +48,7 @@ setjb-locale
 setjb-backlight
 setjb-idle
 setjb-mouse
+setjb-networks
 loadjb-panel
 
 exec i3
