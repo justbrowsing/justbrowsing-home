@@ -126,7 +126,7 @@ exec i3
 
 ```sh
 [:0.0]
-file=/home/user/.i3/wallpaper.png
+file=/home/jbuser/.i3/wallpaper.png
 mode=2
 bgcolor=#000000
 ```
@@ -143,5 +143,5 @@ sizey=681
 [nitrogen]
 view=icon
 icon_caps=false
-dirs=/home/user/.i3;
+dirs=/home/jbuser/.i3;
 ```
